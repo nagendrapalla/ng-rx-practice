@@ -1,2 +1,21 @@
-<!-- <button type="button" id="btn">Show Books</button>
-<div id="books-place" ></div> -->
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <Label>Start Date</Label><br />
+            <p-calendar [(ngModel)]="startDate" [showIcon]="true" ></p-calendar>
+            <p class="text-danger" *ngIf="error" >{{ error }}</p>
+        </div>
+        <div class="col">
+            <Label>End Date</Label><br />
+            <p-calendar [(ngModel)]="endDate" [showIcon]="true" ></p-calendar>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col">
+            <button type="submit" class="btn btn-primary mr-3" (click)="checkDate()" >Search</button>
+            <button type="submit" class="btn btn-danger" (click)="clearDates()"  >Restart</button>
+        </div>
+    </div>
+</div>
+
