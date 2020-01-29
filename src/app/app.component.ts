@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { booksObservable$ } from './Observables';
-import { fromEvent } from 'rxjs';
+import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -10,36 +9,45 @@ import { fromEvent } from 'rxjs';
 
 
 export class AppComponent {
-  title = 'ngrx-demo';
-  startDate: Date;
-  endDate: Date;
+  title = 'ngrx-demo';  
   error: string;
+  myForm: FormGroup;
+  submitted = false;
 
-  constructor() {
+  constructor(private fb: FormBuilder) {
 
   }
 
-  clearDates() {
-    this.startDate = null;
-    this.endDate = null;
-    this.error = null;
+  ngOnInit() {
+    this.myForm = this.fb.group({
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required]
+    });
   }
 
-  checkDate() {    
-    if (!this.startDate) {
+  onSubmit(form: FormGroup) {
+    this.submitted = true;    
+    let startDate = form.value.startDate;
+    let endDate = form.value.endDate;
+
+    if (!startDate) {
       this.error = "Start Date must be filled";
-      this.endDate = new Date();
-    } else if (!this.endDate) {
-      this.endDate = new Date();
+      endDate = new Date();
+    } else if (!endDate) {
+      endDate = new Date();
     }
 
-    if (this.startDate && this.endDate) {
-      let betweenDays = this.diffDate(this.startDate, this.endDate);
+    if (startDate && endDate) {
+      let betweenDays = this.diffDate(startDate, endDate);
       if (betweenDays <= 0) {
         this.error = "Start date must be before the end date";
       }
     }
 
+  }
+
+  clearDates() {    
+    this.myForm.reset();
   }
 
   diffDate(date1, date2) {

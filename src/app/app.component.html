@@ -1,21 +1,25 @@
 <div class="container">
-    <div class="row">
-        <div class="col">
-            <Label>Start Date</Label><br />
-            <p-calendar [(ngModel)]="startDate" [showIcon]="true" ></p-calendar>
-            <p class="text-danger" *ngIf="error" >{{ error }}</p>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+        <div class="row">
+            <div class="col">
+                <Label>Start Date</Label><br />
+                <p-calendar formControlName="startDate" [showIcon]="true"></p-calendar>
+                {{ myForm.get('startDate').value }}
+                <div *ngIf="myForm.get('startDate').hasError('required')">
+                    Oops, please provide a name!
+                </div>
+            </div>
+            <div class="col">
+                <Label>End Date</Label><br />
+                <p-calendar formControlName="endDate" [showIcon]="true"></p-calendar>
+            </div>
         </div>
-        <div class="col">
-            <Label>End Date</Label><br />
-            <p-calendar [(ngModel)]="endDate" [showIcon]="true" ></p-calendar>
+        <br />
+        <div class="row">
+            <div class="col">
+                <button type="submit" class="btn btn-primary mr-3">Search</button>
+                <button type="reset" class="btn btn-danger" (click)="clearDates()">Restart</button>
+            </div>
         </div>
-    </div>
-    <br />
-    <div class="row">
-        <div class="col">
-            <button type="submit" class="btn btn-primary mr-3" (click)="checkDate()" >Search</button>
-            <button type="submit" class="btn btn-danger" (click)="clearDates()"  >Restart</button>
-        </div>
-    </div>
+    </form>
 </div>
-
