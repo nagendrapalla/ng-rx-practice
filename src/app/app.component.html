@@ -4,14 +4,16 @@
             <div class="col">
                 <Label>Start Date</Label><br />
                 <p-calendar formControlName="startDate" [showIcon]="true"></p-calendar>
-                {{ myForm.get('startDate').value }}
-                <div *ngIf="myForm.get('startDate').hasError('required')">
-                    Oops, please provide a name!
+                <div class="text-danger" *ngIf="submitted && myForm.get('startDate').hasError('required')">
+                    Start Date must be filled
                 </div>
             </div>
             <div class="col">
                 <Label>End Date</Label><br />
                 <p-calendar formControlName="endDate" [showIcon]="true"></p-calendar>
+                <div class="text-danger" *ngIf="submitted && myForm.get('endDate').hasError('incorrect')">
+                    Start date must be before the end date
+                </div>
             </div>
         </div>
         <br />

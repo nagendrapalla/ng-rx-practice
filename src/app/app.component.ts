@@ -21,7 +21,7 @@ export class AppComponent {
   ngOnInit() {
     this.myForm = this.fb.group({
       startDate: ['', Validators.required],
-      endDate: ['', Validators.required]
+      endDate: ['']
     });
   }
 
@@ -31,16 +31,15 @@ export class AppComponent {
     let endDate = form.value.endDate;
 
     if (!startDate) {
-      this.error = "Start Date must be filled";
-      endDate = new Date();
+      form.controls['endDate'].setValue(new Date());
     } else if (!endDate) {
-      endDate = new Date();
+      form.controls['endDate'].setValue(new Date());
     }
 
     if (startDate && endDate) {
       let betweenDays = this.diffDate(startDate, endDate);
       if (betweenDays <= 0) {
-        this.error = "Start date must be before the end date";
+        form.controls['endDate'].setErrors({'incorrect': true});
       }
     }
 
